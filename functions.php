@@ -19,7 +19,7 @@
 require "twiteroauth/autoload.php";
 use Abraham\TwitterOAuth\TwitterOAuth;
 
-function post_published_notification( $ID, $post ) {
+function post_published_for_twitter( $ID, $post ) {
 	
     $title = $post->post_title;
     $permalink = get_permalink( $ID );
@@ -53,4 +53,4 @@ function post_published_notification( $ID, $post ) {
 
 	
 }
-add_action( 'publish_post', 'post_published_notification', 10, 2 );
+add_action( 'publish_post', 'post_published_for_twitter', 10, 2 );
