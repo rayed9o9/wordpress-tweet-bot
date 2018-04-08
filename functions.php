@@ -2,7 +2,7 @@
  * 1- Get your keys from your Twitter Acount
  * 2- place this code in functions.php in your theme folder
  * 3- add the TwtterOauth lib in the same folder
- * 4- modify based on your wibsite
+ * 4- modify based on your website
  * 
  */
 
