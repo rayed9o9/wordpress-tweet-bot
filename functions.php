@@ -21,35 +21,43 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 function post_published_for_twitter( $ID, $post ) {
 	
+
+if ( $post->post_date != $post->post_modified ){
+    //THIS IS AN UPDATE
+  } else {
+    //POST JUST GOT PUBLISHED
     $title = $post->post_title;
     $permalink = get_permalink( $ID );
 	
-	$post_thumbnail_id = get_post_thumbnail_id( $post );
+    $post_thumbnail_id = get_post_thumbnail_id( $post );
     if ( ! $post_thumbnail_id ) {
         $image_post = "";
     }
     
 	
-	$image_arr = wp_get_attachment_image_src(get_post_thumbnail_id($post_array->ID), 'full');
+    $image_arr = wp_get_attachment_image_src(get_post_thumbnail_id($post_array->ID), 'full');
     $image_post = $image_arr[0];
 	
-	//Add your keys here
-	$consumer_key='';
-	$consumer_secret='';
-	$access_token='';
-	$access_token_secret='';
+    //Add your keys here
+    $consumer_key='';
+    $consumer_secret='';
+    $access_token='';
+    $access_token_secret='';
 
 	
 
-	$connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
-	$content = $connection->get("account/verify_credentials");
+    $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
+    $content = $connection->get("account/verify_credentials");
 	
-	//change the number in substr to suit your site URL TwitterOauth only work with relative links
-	$result = $connection->upload('media/upload',['media'=> "/var/www/html".substr($image_post,19)]);
+    //change the number in substr to suit your site URL TwitterOauth only work with relative links
+    $result = $connection->upload('media/upload',['media'=> "/var/www/html".substr($image_post,19)]);
 
-	$mediaID = $result->media_id;
-	$parameters = array('status' => sprintf( '%s  %s', $title, $permalink ),'media_ids' => $mediaID);
-	$response = $connection->post('statuses/update', $parameters);
+    $mediaID = $result->media_id;
+    $parameters = array('status' => sprintf( '%s  %s', $title, $permalink ),'media_ids' => $mediaID);
+    $response = $connection->post('statuses/update', $parameters);
+  }
+	
+    
 
 	
 }
